@@ -17,7 +17,8 @@ class BrandFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->unique()->word(),
+            'logo' => rand(false, true) ? $this->faker->uuid() . 'jpg' : null,
         ];
     }
 }
