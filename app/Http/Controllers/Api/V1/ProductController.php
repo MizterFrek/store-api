@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index() 
     {
-        $products = Product::allowedSorts(['name', 'description'])->get();
+        $products = Product::applySorts()->get();
         return ProductCollection::make($products);
     }
 

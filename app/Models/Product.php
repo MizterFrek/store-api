@@ -9,10 +9,13 @@ class Product extends Model
     use \Illuminate\Database\Eloquent\Factories\HasFactory;
     use \App\Traits\HasSorts;
 
-    public $allowedSorts = ['name', 'description'];
-
     protected $fillable = [
         'name',
+        'description'
+    ];
+
+    public $allowedSorts = [
+        'name', 
         'description'
     ];
 

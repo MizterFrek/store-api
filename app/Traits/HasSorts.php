@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\Response;
 
 trait HasSorts
