@@ -1,6 +1,4 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Route;
+require 'api.v1.php';
 
-Route::apiResource('products', ProductController::class);

@@ -11,7 +11,6 @@ trait ApiResponser
     {
         return new JsonResponse([
             'data' => $data,
-            'code' => $status,
         ], $status);
     }
 }
