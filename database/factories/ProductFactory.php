@@ -19,7 +19,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->word(),
             'description' => $this->faker->text(),
             'category_id' => Category::factory()->create()->id,
             'brand_id' => Brand::factory()->create()->id,

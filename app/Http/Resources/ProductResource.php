@@ -19,6 +19,7 @@ class ProductResource extends JsonResource
             'id' => (string) $this->resource->getRouteKey(),
             'attributes' => [
                 'name' => $this->resource->name,
+                'description' => $this->resource->description,
                 'category_id' => $this->resource->category_id,
                 'brand_id' => $this->resource->brand_id,
             ],

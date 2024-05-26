@@ -19,6 +19,7 @@ test('can fetch single product', function () {
                 'id' => (string) $product->getRouteKey(),
                 'attributes' => [
                     'name' => $product->name,
+                    'description' => $product->description,
                     'category_id' => $product->category_id,
                     'brand_id' => $product->brand_id,
                 ],
@@ -45,6 +46,7 @@ test('can fetch all products', function () {
                     'id' => (string) $products[0]->getRouteKey(),
                     'attributes' => [
                         'name' => $products[0]->name,
+                        'description' => $products[0]->description,
                         'category_id' => $products[0]->category_id,
                         'brand_id' => $products[0]->brand_id,
                     ],
@@ -57,6 +59,7 @@ test('can fetch all products', function () {
                     'id' => (string) $products[1]->getRouteKey(),
                     'attributes' => [
                         'name' => $products[1]->name,
+                        'description' => $products[1]->description,
                         'category_id' => $products[1]->category_id,
                         'brand_id' => $products[1]->brand_id,
                     ],
@@ -69,6 +72,7 @@ test('can fetch all products', function () {
                     'id' => (string) $products[2]->getRouteKey(),
                     'attributes' => [
                         'name' => $products[2]->name,
+                        'description' => $products[2]->description,
                         'category_id' => $products[2]->category_id,
                         'brand_id' => $products[2]->brand_id,
                     ],
