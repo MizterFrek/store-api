@@ -9,9 +9,7 @@ test('can fetch single product', function () {
     $product = Product::factory()->create(['id' => 15]);
     Product::factory()->times(2)->create();
 
-    $response = $this->get(route('products.show', $product));
-    
-    $response
+    $this->getJson(route('products.show', $product))
         ->assertStatus(Response::HTTP_OK)
         ->assertExactJson([
             'data' => [
@@ -34,7 +32,7 @@ test('can fetch single product', function () {
 test('can fetch all products', function () {
 
     $products = Product::factory()->times(3)->create();
-    $response = $this->get(route('products.index'));
+    $response = $this->getJson(route('products.index'));
 
     $response
         ->assertStatus(Response::HTTP_OK)

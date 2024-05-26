@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 abstract class TestCase extends BaseTestCase
 {
+    use \Tests\Traits\MakesJsonApiRequests;
+
     protected function setUp(): void
     {
         parent::setUp();
