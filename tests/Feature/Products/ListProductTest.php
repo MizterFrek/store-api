@@ -9,7 +9,7 @@ test('can fetch single product', function () {
     $product = Product::factory()->create(['id' => 15]);
     Product::factory()->times(2)->create();
 
-    $this->getJson(route('products.show', $product))
+    $this->getJson(route('api.v1.products.show', $product))
         ->assertStatus(Response::HTTP_OK)
         ->assertExactJson([
             'data' => [
@@ -22,7 +22,7 @@ test('can fetch single product', function () {
                     'brand_id' => $product->brand_id,
                 ],
                 'links' => [
-                    'self' => route('products.show', $product)
+                    'self' => route('api.v1.products.show', $product)
                 ]
             ],
         ])
@@ -32,7 +32,7 @@ test('can fetch single product', function () {
 test('can fetch all products', function () {
 
     $products = Product::factory()->times(3)->create();
-    $response = $this->getJson(route('products.index'));
+    $response = $this->getJson(route('api.v1.products.index'));
 
     $response
         ->assertStatus(Response::HTTP_OK)
@@ -49,7 +49,7 @@ test('can fetch all products', function () {
                         'brand_id' => $products[0]->brand_id,
                     ],
                     'links' => [
-                        'self' => route('products.show', $products[0])
+                        'self' => route('api.v1.products.show', $products[0])
                     ]
                 ],
                 [
@@ -62,7 +62,7 @@ test('can fetch all products', function () {
                         'brand_id' => $products[1]->brand_id,
                     ],
                     'links' => [
-                        'self' => route('products.show', $products[1])
+                        'self' => route('api.v1.products.show', $products[1])
                     ]
                 ],
                 [
@@ -75,12 +75,12 @@ test('can fetch all products', function () {
                         'brand_id' => $products[2]->brand_id,
                     ],
                     'links' => [
-                        'self' => route('products.show', $products[2])
+                        'self' => route('api.v1.products.show', $products[2])
                     ]
                 ]
             ],
             'links' => [
-                'self' => route('products.index')
+                'self' => route('api.v1.products.index')
             ],
             'meta' => [
                 'products_count' => 3
