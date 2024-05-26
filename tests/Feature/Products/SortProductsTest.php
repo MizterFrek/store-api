@@ -50,3 +50,13 @@ test('it can sort products by name and description', function () {
         ->assertSeeInOrder([ 'D content', 'C content', 'B content' ])
     ;
 });
+
+test('it cannot sort products by unknown fields', function () {
+    
+    Product::factory()->times(3)->create();
+
+    $url = route('products.index', ['sort' => 'unknown']);
+    $this->getJson($url)
+        ->assertStatus(Response::HTTP_BAD_REQUEST)
+    ;
+});
