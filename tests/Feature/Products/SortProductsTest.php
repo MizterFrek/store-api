@@ -13,6 +13,7 @@ test('it can sort products by name asc', function () {
     
     $this->getJson($url)
         ->assertStatus(Response::HTTP_OK)
+        ->assertJsonCount(3, 'data')
         ->assertSeeInOrder([ 'A name', 'B name', 'C name' ])
     ;
 });
@@ -28,6 +29,7 @@ test('it can sort products by name desc', function () {
 
     $response
         ->assertStatus(Response::HTTP_OK)
+        ->assertJsonCount(3, 'data')
         ->assertSeeInOrder([ 'C name', 'B name', 'A name' ])
     ;
 });
@@ -41,12 +43,14 @@ test('it can sort products by name and description', function () {
     $url = route('api.v1.products.index', ['sort' => 'name,-description']);
     $this->getJson($url)
         ->assertStatus(Response::HTTP_OK)
+        ->assertJsonCount(3, 'data')
         ->assertSeeInOrder([ 'A name', 'B name', 'C name' ])
     ;
 
     $url = route('api.v1.products.index', ['sort' => '-description,name']);
     $this->getJson($url)
         ->assertStatus(Response::HTTP_OK)
+        ->assertJsonCount(3, 'data')
         ->assertSeeInOrder([ 'D content', 'C content', 'B content' ])
     ;
 });

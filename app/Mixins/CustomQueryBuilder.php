@@ -37,6 +37,19 @@ class CustomQueryBuilder
         };
     }
 
+    public function jsonPaginate(): Closure
+    {
+        return function () {
+            /** @var Builder $this */
+            return $this->paginate(
+                $perPage = request('page.size', 15),
+                $columns = ['*'],
+                $pageName = 'page[number]',
+                $page = request('page.number', 1)
+            )->appends(request()->only('sort', 'filter', 'page.size'));
+        };
+    }
+
     public function getResourceType(): Closure
     {
         return function () {

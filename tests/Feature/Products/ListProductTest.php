@@ -37,7 +37,7 @@ test('can fetch all products', function () {
     $response
         ->assertStatus(Response::HTTP_OK)
         ->assertJsonCount(3, 'data')
-        ->assertExactJson([
+        ->assertJson([
             'data' => [
                 [
                     'type' => 'products',
