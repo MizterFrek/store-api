@@ -4,7 +4,8 @@ use App\Models\Product;
 
 test('can paginate products', function () {
     
-    $products = Product::factory()->count(6)->create();
+    $products = Product::factory()->times(6)->create();
+
     $url = route('api.v1.products.index', [
         'page' => [ 'size' => 2, 'number' => 2 ]
     ]);
@@ -15,12 +16,12 @@ test('can paginate products', function () {
         $products[2]->name, 
         $products[3]->name 
     ]);
-
-    $response->assertDontSee([ 
-        $products[0]->name, 
-        $products[1]->name, 
-        $products[4]->name, 
-        $products[5]->name 
+    
+    $response->assertDontSee([
+        $products[0]->name,
+        $products[1]->name,
+        $products[4]->name,
+        $products[5]->name
     ]);
 
     $response->assertJsonStructure([
