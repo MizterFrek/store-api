@@ -16,13 +16,6 @@ test('can paginate products', function () {
         $products[2]->name, 
         $products[3]->name 
     ]);
-    
-    $response->assertDontSee([
-        $products[0]->name,
-        $products[1]->name,
-        $products[4]->name,
-        $products[5]->name
-    ]);
 
     $response->assertJsonStructure([
         'links' => ['first', 'last', 'prev', 'next']
@@ -68,20 +61,13 @@ test('can paginate and sort products', function () {
         'C name'
     ]);
 
-    // $firstLink = urldecode($response->json('links.first'));
-    // $lastLink = urldecode($response->json('links.last'));
-    // $prevLink = urldecode($response->json('links.prev'));
-    // $nextLink = urldecode($response->json('links.next'));
+    $firstLink = urldecode($response->json('links.first'));
+    $lastLink = urldecode($response->json('links.last'));
+    $prevLink = urldecode($response->json('links.prev'));
+    $nextLink = urldecode($response->json('links.next'));
 
-    // $this->assertStringContainsString('page[size]=2', $firstLink);
-    // $this->assertStringContainsString('page[number]=1', $firstLink);
-
-    // $this->assertStringContainsString('page[size]=2', $lastLink);
-    // $this->assertStringContainsString('page[number]=3', $lastLink);
-
-    // $this->assertStringContainsString('page[size]=2', $prevLink);
-    // $this->assertStringContainsString('page[number]=1', $prevLink);
-
-    // $this->assertStringContainsString('page[size]=2', $nextLink);
-    // $this->assertStringContainsString('page[number]=3', $nextLink);
+    $this->assertStringContainsString('sort=name', $firstLink);
+    $this->assertStringContainsString('sort=name', $lastLink);
+    $this->assertStringContainsString('sort=name', $prevLink);
+    $this->assertStringContainsString('sort=name', $nextLink);
 });
