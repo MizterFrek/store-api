@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Mixins\CustomQueryBuilder;
+use App\Macros\CustomQueryBuilder;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 

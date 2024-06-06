@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mixins;
+namespace App\Macros;
 
 use Closure;
 use Illuminate\Support\Str;

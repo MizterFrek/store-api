@@ -11,7 +11,14 @@ class ProductController extends Controller
 {
     public function index() 
     {
-        $products = Product::applySorts();
+        $products = Product::query();
+     
+        foreach(request('filter', []) as $filter => $value) {
+            
+            $products->where($filter, 'LIKE', "%$value%");
+        }
+
+        $products->applySorts();
         return ProductCollection::make($products->paginate(
             perPage: request('page.size', 15),
             columns: ['*'],
