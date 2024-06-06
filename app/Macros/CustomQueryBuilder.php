@@ -22,7 +22,9 @@ class CustomQueryBuilder
                     $sortField = ltrim($sortField, '-');
 
                     if (! in_array($sortField, $allowedSorts)) {
-                        throw new BadRequestHttpException("The sort field '{$sortField}' is not allowed in the '{$this->getResourceType()}' resource");
+                        throw new BadRequestHttpException(
+                            "The sort field '{$sortField}' is not allowed in the '{$this->getResourceType()}' resource"
+                        );
                     }
 
                     $sortField = str($sortField)->replace('-', '_');
@@ -33,6 +35,25 @@ class CustomQueryBuilder
                 }
             }
 
+            return $this;
+        };
+    }
+
+    public function allowedFilters(): Closure
+    {
+        return function($allowedFilters) {
+            /** @var Builder $this */
+            foreach(request('filter', []) as $filter => $value) {
+                if (! in_array($filter, $allowedFilters)) {
+                    throw new BadRequestHttpException(
+                        "The sort field '{$filter}' is not allowed in the '{$this->getResourceType()}' resource"
+                    );
+                }
+                
+                $this->hasNamedScope($filter)
+                    ? $this->{$filter}($value)
+                    : $this->where($filter, 'LIKE', "%$value%");
+            }
             return $this;
         };
     }

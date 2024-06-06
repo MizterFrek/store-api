@@ -39,7 +39,7 @@ test('can paginate products', function () {
     $this->assertStringContainsString('page[number]=3', $nextLink);
 });
 
-test('can paginate and sort products', function () {
+test('can paginate sorted products', function () {
     
     Product::factory()->create(['name' => 'C name', 'description' => 'B content']);
     Product::factory()->create(['name' => 'A name', 'description' => 'C content']);
@@ -70,4 +70,34 @@ test('can paginate and sort products', function () {
     $this->assertStringContainsString('sort=name', $lastLink);
     $this->assertStringContainsString('sort=name', $prevLink);
     $this->assertStringContainsString('sort=name', $nextLink);
+});
+
+test('can paginate filtered products', function () {
+    
+    Product::factory()->times(3)->create();
+    Product::factory()->create(['name' => 'C laravel', 'description' => 'B content']);
+    Product::factory()->create(['name' => 'Laravel A', 'description' => 'C content']);
+    Product::factory()->create(['name' => 'LARAVEL', 'description' => 'D content']);
+    
+    $url = route('api.v1.products.index', [
+        'filter' => [
+            'name' => 'laravel'
+        ],
+        'page' => [ 
+            'size' => 1, 
+            'number' => 2 
+        ]
+    ]);
+
+    $response = $this->getJson($url);
+
+    $firstLink = urldecode($response->json('links.first'));
+    $lastLink = urldecode($response->json('links.last'));
+    $prevLink = urldecode($response->json('links.prev'));
+    $nextLink = urldecode($response->json('links.next'));
+
+    $this->assertStringContainsString('filter[name]=laravel', $firstLink);
+    $this->assertStringContainsString('filter[name]=laravel', $lastLink);
+    $this->assertStringContainsString('filter[name]=laravel', $prevLink);
+    $this->assertStringContainsString('filter[name]=laravel', $nextLink);
 });
