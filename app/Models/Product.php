@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -24,11 +25,21 @@ class Product extends Model
         'name', 
         'description', 
         'month', 
-        'year'
+        'year',
+        'categories'
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function scopeCategories(Builder $query, $categories)
+    {
+        $categorySlugs = explode(',', $categories);
+
+        $query->whereHas('category', function($q) use ($categorySlugs) {
+            $q->whereIn('slug', $categorySlugs);
+        });
     }
 }

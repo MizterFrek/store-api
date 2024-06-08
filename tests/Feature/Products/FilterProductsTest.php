@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Product;
 
 test('can filter products by name', function () {
@@ -34,6 +35,34 @@ test('can filter products by description', function () {
         ->assertJsonCount(1, 'data')
         ->assertSee('Product Test')
         ->assertDontSee('random')
+    ;
+});
+
+test('can filter products by catergory', function () {
+
+    $cat1 = Category::factory()->hasProducts(1)->create(['slug' => 'cat-1']);
+    $cat2 = Category::factory()->hasProducts(3)->create(['slug' => 'cat-2']);
+    $product = Product::factory()->hasCategory()->create(['name' => 'Producto Test']);
+    $cat3 = Category::factory()->hasProducts(4)->create(['id' => 99, 'slug' => 'cat-3']);
+    
+    $url = route('api.v1.products.index', [
+        'filter' => [
+            'categories' => 'cat-1,cat-2'
+        ]
+    ]);
+
+    $this->getJson($url)
+        ->assertJsonCount(4, 'data')
+        ->assertSee([
+            $cat1->products[0]->name, 
+            $cat2->products[0]->name, 
+            $cat2->products[1]->name, 
+            $cat2->products[2]->name
+        ])->assertDontSee([
+            $cat3->id,
+            $product->name,
+            $product->category_id,
+        ])    
     ;
 });
 

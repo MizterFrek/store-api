@@ -4,7 +4,7 @@ use App\Models\Product;
 
 test('can paginate products', function () {
     
-    $products = Product::factory()->times(6)->create();
+    $products = Product::factory()->count(6)->create();
 
     $url = route('api.v1.products.index', [
         'page' => [ 'size' => 2, 'number' => 2 ]
@@ -13,9 +13,14 @@ test('can paginate products', function () {
     $response = $this->getJson($url);
     
     $response->assertSee([ 
-        $products[2]->name, 
-        $products[3]->name 
+        $products[2]->description, 
+        $products[3]->description 
     ]);
+    
+    $response->assertDontSee($products[0]->description);
+    $response->assertDontSee($products[1]->description);
+    $response->assertDontSee($products[4]->description);
+    $response->assertDontSee($products[5]->description);
 
     $response->assertJsonStructure([
         'links' => ['first', 'last', 'prev', 'next']
@@ -74,7 +79,7 @@ test('can paginate sorted products', function () {
 
 test('can paginate filtered products', function () {
     
-    Product::factory()->times(3)->create();
+    Product::factory()->count(3)->create();
     Product::factory()->create(['name' => 'C laravel', 'description' => 'B content']);
     Product::factory()->create(['name' => 'Laravel A', 'description' => 'C content']);
     Product::factory()->create(['name' => 'LARAVEL', 'description' => 'D content']);
