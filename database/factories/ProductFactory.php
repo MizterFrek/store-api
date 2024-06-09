@@ -19,7 +19,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->word(),
+            'name' => $word = $this->faker->unique()->word(),
+            'slug' => \Illuminate\Support\Str::slug($word, '-'),
             'description' => $this->faker->text(),
             'category_id' => Category::factory()->create()->id,
             'brand_id' => Brand::factory()->create()->id,
